@@ -7,7 +7,7 @@
     }
   ],
   "routes": [
-    { "src": "/v2/store", "dest": "/app.js" },
+    { "src": "/v2/save", "dest": "/app.js" },
     { "src": "/v2/(.*)", "dest": "/app.js" }
   ]
 }
