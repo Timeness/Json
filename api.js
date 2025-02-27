@@ -95,10 +95,6 @@ app.use(['/','/v2'], (req, res) => {
     res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
 
-app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, '404.html'));
-});
-
 bot.command("save", async (ctx) => {
     const reply = ctx.message.reply_to_message;
 
