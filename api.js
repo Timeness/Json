@@ -11,7 +11,7 @@ app.use(express.json());
 
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
 const CHANNEL_ID = process.env.CHANNEL_ID;
-const API_BASE_URL = "http://localhost:3330/v2";
+const API_BASE_URL = "http://localhost:3333/v2";
 
 app.post('/v2/save', async (req, res) => {
     try {
@@ -25,7 +25,7 @@ app.post('/v2/save', async (req, res) => {
         await fs.ensureDir(path.dirname(filePath));
         await fs.writeJson(filePath, data, { spaces: 2 });
 
-        const link = `http://localhost:3330/v2/${id}.json`;
+        const link = `http://localhost:3333/v2/${id}.json`;
         await bot.api.sendMessage(CHANNEL_ID, `🆕 New JSON Stored!\n🔑 ID: ${id}\n🔗 Access: ${link}`);
 
         res.status(200).json({ success: true, id, link });
@@ -91,9 +91,11 @@ app.post('/v2/:id.clear', async (req, res) => {
     }
 });
 
+/*
 app.use(['/','/v2'], (req, res) => {
     res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
+*/
 
 bot.command("save", async (ctx) => {
     const reply = ctx.message.reply_to_message;
@@ -175,7 +177,7 @@ bot.command("get", async (ctx) => {
 
 bot.start();
 
-const PORT = process.env.PORT || 3330;
+const PORT = process.env.PORT || 3333;
 app.listen(PORT, () => {
     console.log(`Runn on ::${PORT}`);
 });
