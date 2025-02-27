@@ -11,10 +11,11 @@ app.use(express.json());
 
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
 const CHANNEL_ID = process.env.CHANNEL_ID;
-const API_BASE_URL = "http://localhost:3363/v2";
+const API_BASE_URL = "http://localhost:3663/v2";
 
 app.post('/v2/save', async (req, res) => {
     try {
+        console.log('Received data:', req.body);
         if (!req.is('application/json')) {
             return res.status(400).json({ error: 'Invalid JSON format' });
         }
@@ -25,11 +26,12 @@ app.post('/v2/save', async (req, res) => {
         await fs.ensureDir(path.dirname(filePath));
         await fs.writeJson(filePath, data, { spaces: 2 });
 
-        const link = `http://localhost:3363/v2/${id}.json`;
+        const link = `http://localhost:3663/v2/${id}.json`;
         await bot.api.sendMessage(CHANNEL_ID, `🆕 New JSON Stored!\n🔑 ID: ${id}\n🔗 Access: ${link}`);
 
         res.status(200).json({ success: true, id, link });
     } catch (error) {
+        console.error('Error saving data:', error);
         res.status(500).json({ error: 'Internal Server Error', details: error.message });
     }
 });
@@ -109,7 +111,7 @@ bot.command("save", async (ctx) => {
         const response = await axios.post(`${API_BASE_URL}/save`, jsonData);
         ctx.reply(`✅ JSON saved!\n🔑 ID: ${response.data.id}\n🔗 [Access Here](${response.data.link})`, { parse_mode: "Markdown" });
     } catch (error) {
-        ctx.reply("❌ Invalid JSON format or server error.");
+        ctx.reply(`❌ Invalid JSON format or server error, ${response}`);
     }
 });
 
@@ -177,7 +179,7 @@ bot.command("get", async (ctx) => {
 
 bot.start();
 
-const PORT = process.env.PORT || 3363;
+const PORT = process.env.PORT || 3663;
 app.listen(PORT, () => {
     console.log(`Runn on ::${PORT}`);
 });
