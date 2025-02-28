@@ -1,10 +1,11 @@
-const express = require('express');
-const fs = require('fs-extra');
-const path = require('path');
-const { Bot } = require('grammy');
-const { nanoid } = require('nanoid');
-const axios = require('axios');
-require('dotenv').config();
+import express from 'express';
+import fs from 'fs-extra';
+import path from 'path';
+import { Bot } from 'grammy';
+import { nanoid } from 'nanoid';
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 app.use(express.json());
