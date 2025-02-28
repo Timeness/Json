@@ -9,8 +9,8 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN);
-const CHANNEL_ID = process.env.CHANNEL_ID;
+const bot = new Bot("7803526369:AAEsDDXLTo3KvT1JcE7OipgNhk6XyeVzPmQ");
+const CHANNEL_ID = "-1002315836729";
 const API_BASE_URL = "http://localhost:5600/v2";
 
 async function sendErrorToChannel(error) {
